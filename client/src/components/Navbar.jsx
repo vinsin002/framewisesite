@@ -5,7 +5,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="container navbar-inner">
         <a href="#top" className="brand">
-          <img src="/logo.png" alt="Framewise logo" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Framewise logo" />
           Framewise
         </a>
 
