@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    background: #090d16;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 38px 48px 24px;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Ambient background glows */
+  .bg-glow-1 {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 820px;
+    height: 380px;
+    background: radial-gradient(ellipse at center, #38bdf833 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-2 {
+    position: absolute;
+    bottom: -100px;
+    right: 10%;
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, #6366f120 0%, transparent 70%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    z-index: 2;
+    margin-bottom: 24px;
+    max-width: 980px;
+  }
+  .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .badge-tag .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 8px #38bdf8;
+  }
+  .headline {
+    font-size: 34px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subheadline {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-weight: 450;
+  }
+  .subheadline b {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+
+  /* Main mockup display container */
+  .mockup-wrap {
+    z-index: 2;
+    width: 100%;
+    max-width: 1184px;
+    height: 570px;
+    position: relative;
+    border-radius: 16px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Window topbar */
+  .window-topbar {
+    height: 38px;
+    background: #151e33;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .traffic-light {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .tl-red { background: #ef4444; }
+  .tl-yellow { background: #f59e0b; }
+  .tl-green { background: #10b981; }
+  .topbar-tab {
+    margin-left: 12px;
+    background: #0f172a;
+    padding: 5px 16px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 2px solid #38bdf8;
+  }
+  .topbar-url {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: #64748b;
+    font-family: monospace;
+    width: 320px;
+    text-align: center;
+  }
+
+  /* Inner workspace */
+  .workspace {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #0a0e17;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="header">
+    <div class="badge-tag"><span class="dot"></span>⚡ 1-CLICK INSTANT CAPTURE</div>
+    <h1 class="headline">Snap Lecture Slides Without Leaving YouTube</h1>
+    <p class="subheadline">Press <b>S</b> on your keyboard or click the integrated camera button. High resolution, zero UI clutter.</p>
+  </div>
+
+  <div class="mockup-wrap">
+    
+    <div class="window-topbar">
+      <div class="traffic-light tl-red"></div>
+      <div class="traffic-light tl-yellow"></div>
+      <div class="traffic-light tl-green"></div>
+      <div class="topbar-tab">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#ef4444"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span>Stanford CS229: Machine Learning — Lecture 03</span>
+      </div>
+      <div class="topbar-url">youtube.com/watch?v=jGwO_UgTS7I</div>
+    </div>
+    <div class="workspace" style="display: flex; flex-direction: column;">
+      <!-- Main YouTube Video Area -->
+      <div style="flex: 1; position: relative; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+        
+        <!-- Video Slide Content -->
+        <div style="width: 86%; height: 86%; background: #1e293b; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 36px 48px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #334155; position: relative;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #3b82f6; padding-bottom: 12px; margin-bottom: 24px;">
+              <h2 style="font-size: 26px; color: #f8fafc; font-weight: 700;">Gradient Descent: Cost Function Optimization</h2>
+              <span style="background: #3b82f620; color: #60a5fa; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 600;">CS229 — Slide 14</span>
+            </div>
+            <p style="font-size: 16px; color: #94a3b8; margin-bottom: 20px;">Updating parameters in batch gradient descent to minimize empirical mean squared error:</p>
+            
+            <div style="background: #0f172a; padding: 20px 28px; border-radius: 10px; border-left: 4px solid #38bdf8; margin-bottom: 20px; font-family: 'SF Pro Display', serif;">
+              <div style="font-size: 22px; color: #f1f5f9; font-style: italic; letter-spacing: 0.04em;">
+                &theta;<sub>j</sub> := &theta;<sub>j</sub> &minus; &alpha; &middot; &part; / &part;&theta;<sub>j</sub> J(&theta;)
+              </div>
+              <div style="font-size: 15px; color: #64748b; margin-top: 8px; font-style: normal;">
+                where &alpha; is the learning rate &middot; J(&theta;) = 1/(2m) &sum; (h<sub>&theta;</sub>(x<sup>(i)</sup>) &minus; y<sup>(i)</sup>)<sup>2</sup>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 24px;">
+              <div style="flex: 1; background: #0f172a80; padding: 14px 18px; border-radius: 8px; border: 1px solid #334155;">
+                <span style="color: #38bdf8; font-weight: 600; font-size: 14px;">1. Convergence Guarantee</span>
+                <p style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Guaranteed convex minimum when J(&theta;) is strictly quadratic.</p>
+              </div>
+              <div style="flex: 1; background: #0f172a80; padding: 14px 18px; border-radius: 8px; border: 1px solid #334155;">
+                <span style="color: #10b981; font-weight: 600; font-size: 14px;">2. Vectorized NumPy Form</span>
+                <p style="color: #94a3b8; font-size: 13px; margin-top: 4px;">&theta; = &theta; &minus; (&alpha;/m) &times; X<sup>T</sup> (X&theta; &minus; y)</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 12px; color: #64748b;">
+            <span>Stanford Engineering Online &copy; 2026</span>
+            <span>Lecture 03 / Supervised Learning</span>
+          </div>
+        </div>
+
+        <!-- Floating Framewise Success Toast -->
+        <div style="position: absolute; top: 28px; right: 36px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); border: 1px solid #38bdf8; border-radius: 12px; padding: 12px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 16px 36px rgba(0,0,0,0.6); animation: pulse 2s infinite;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: #0284c7; display: flex; align-items: center; justify-content: center; color: white;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 6px;">
+              <span>Slide Captured at 14:28</span>
+              <span style="background: #10b981; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px;">HD 1080p</span>
+            </div>
+            <div style="font-size: 12px; color: #94a3b8; margin-top: 2px;">Saved to CS229 Lecture Deck &middot; Press <b>S</b> anytime</div>
+          </div>
+        </div>
+
+        <!-- Feature Spotlight Indicator Pointer -->
+        <div style="position: absolute; bottom: 84px; right: 250px; display: flex; flex-direction: column; align-items: center; z-index: 10;">
+          <div style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; box-shadow: 0 8px 24px rgba(37,99,235,0.5); display: flex; align-items: center; gap: 8px;">
+            <span>📸 Framewise Quick-Snap Button</span>
+            <span style="background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 10px; font-size: 11px;">Press 'S'</span>
+          </div>
+          <div style="width: 2px; height: 18px; background: #38bdf8;"></div>
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 10px #38bdf8;"></div>
+        </div>
+
+      </div>
+
+      <!-- YouTube Native Controls Bar with Framewise Button -->
+      <div style="height: 52px; background: #0f0f0f; border-top: 1px solid #222; display: flex; align-items: center; padding: 0 20px; position: relative;">
+        <!-- Red progress bar -->
+        <div style="position: absolute; top: -3px; left: 0; right: 0; height: 3px; background: #444;">
+          <div style="width: 32%; height: 100%; background: #ff0000; position: relative;">
+            <div style="position: absolute; right: -5px; top: -4px; width: 11px; height: 11px; border-radius: 50%; background: #ff0000;"></div>
+          </div>
+        </div>
+
+        <!-- Left controls -->
+        <div style="display: flex; align-items: center; gap: 18px;">
+          <!-- Play -->
+          <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <!-- Next -->
+          <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          <!-- Volume -->
+          <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+          <!-- Time -->
+          <span style="font-size: 13px; color: #ddd; font-family: sans-serif; font-weight: 500;">14:28 / 45:10</span>
+        </div>
+
+        <!-- Right controls with Framewise Camera icon -->
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 16px;">
+          
+          <!-- FRAMEWISE BUTTON HIGHLIGHTED -->
+          <div style="background: rgba(14, 165, 233, 0.25); border: 1.5px solid #38bdf8; border-radius: 8px; padding: 6px 12px; display: flex; align-items: center; gap: 7px; color: #38bdf8; cursor: pointer; box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <span style="font-size: 12px; font-weight: 700; color: #ffffff;">Snap</span>
+          </div>
+
+          <!-- YouTube CC -->
+          <div style="border: 1px solid #777; border-radius: 3px; padding: 1px 5px; font-size: 11px; font-weight: bold; color: #aaa;">CC</div>
+          <!-- Settings gear -->
+          <svg width="18" height="18" fill="#aaa" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          <!-- Fullscreen -->
+          <svg width="18" height="18" fill="#aaa" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    background: #090d16;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 38px 48px 24px;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Ambient background glows */
+  .bg-glow-1 {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 820px;
+    height: 380px;
+    background: radial-gradient(ellipse at center, #60a5fa33 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-2 {
+    position: absolute;
+    bottom: -100px;
+    right: 10%;
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, #6366f120 0%, transparent 70%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    z-index: 2;
+    margin-bottom: 24px;
+    max-width: 980px;
+  }
+  .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .badge-tag .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #60a5fa;
+    box-shadow: 0 0 8px #60a5fa;
+  }
+  .headline {
+    font-size: 34px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subheadline {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-weight: 450;
+  }
+  .subheadline b {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+
+  /* Main mockup display container */
+  .mockup-wrap {
+    z-index: 2;
+    width: 100%;
+    max-width: 1184px;
+    height: 570px;
+    position: relative;
+    border-radius: 16px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Window topbar */
+  .window-topbar {
+    height: 38px;
+    background: #151e33;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .traffic-light {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .tl-red { background: #ef4444; }
+  .tl-yellow { background: #f59e0b; }
+  .tl-green { background: #10b981; }
+  .topbar-tab {
+    margin-left: 12px;
+    background: #0f172a;
+    padding: 5px 16px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 2px solid #60a5fa;
+  }
+  .topbar-url {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: #64748b;
+    font-family: monospace;
+    width: 320px;
+    text-align: center;
+  }
+
+  /* Inner workspace */
+  .workspace {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #0a0e17;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="header">
+    <div class="badge-tag"><span class="dot"></span>🔍 REAL-TIME THUMBNAIL STREAM & SEEK</div>
+    <h1 class="headline">Review Slides & Jump Video to Exact Timestamps</h1>
+    <p class="subheadline">Inspect every captured frame in the companion popup or side panel. Click any slide to seek playback.</p>
+  </div>
+
+  <div class="mockup-wrap">
+    
+    <div class="window-topbar">
+      <div class="traffic-light tl-red"></div>
+      <div class="traffic-light tl-yellow"></div>
+      <div class="traffic-light tl-green"></div>
+      <div class="topbar-tab">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#3b82f6"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        <span>YouTube + Framewise Companion Popup</span>
+      </div>
+      <div class="topbar-url">chrome-extension://framewise/popup.html</div>
+    </div>
+    <div class="workspace" style="display: flex; padding: 24px 32px; gap: 24px; align-items: center; justify-content: center; background: #0c1220;">
+      
+      <!-- YouTube Video background (dimmed) -->
+      <div style="flex: 1.1; height: 100%; background: #162032; border-radius: 12px; border: 1px solid #1e293b; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 14px;">
+          <div>
+            <span style="font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase;">Active Video Playing</span>
+            <h3 style="font-size: 18px; color: #f8fafc; margin-top: 4px;">MIT 6.006: Introduction to Algorithms</h3>
+          </div>
+          <span style="background: #1e293b; color: #94a3b8; font-size: 12px; padding: 4px 10px; border-radius: 6px;">⏱ 21:05</span>
+        </div>
+        <div style="flex: 1; margin: 18px 0; background: #0b1120; border-radius: 8px; border: 1px solid #1e293b; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;">
+          <div style="width: 280px; height: 120px; background: #1e293b; border-radius: 8px; border: 1px solid #334155; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+            <div style="font-size: 11px; color: #38bdf8; font-weight: 700;">DIVIDE & CONQUER TREE &middot; DEPTH log n</div>
+            <div style="display: flex; justify-content: center; gap: 16px; margin: 6px 0;">
+              <div style="width: 48px; height: 26px; background: #2563eb30; border: 1px solid #3b82f6; border-radius: 4px; font-size: 10px; display: flex; align-items: center; justify-content: center; color: #93c5fd;">T(n/2)</div>
+              <div style="width: 48px; height: 26px; background: #2563eb30; border: 1px solid #3b82f6; border-radius: 4px; font-size: 10px; display: flex; align-items: center; justify-content: center; color: #93c5fd;">T(n/2)</div>
+            </div>
+            <div style="font-size: 10px; color: #64748b; text-align: center;">Per level work: cn &rarr; Total complexity: &Theta;(n log n)</div>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <div style="padding: 6px 14px; background: rgba(59,130,246,0.15); border: 1px solid #3b82f6; border-radius: 20px; font-size: 12px; color: #60a5fa;">
+              Seeked to 21:05 via Framewise Popup ⚡
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #64748b;">
+          <span>Video Tab Synchronized</span>
+          <span>16:9 Widescreen Stream</span>
+        </div>
+      </div>
+
+      <!-- Framewise Companion Popup (Floating Highlight) -->
+      <div style="width: 440px; height: 100%; background: #0f172a; border-radius: 14px; border: 1px solid #3b82f660; box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 24px rgba(59,130,246,0.25); display: flex; flex-direction: column; overflow: hidden;">
+        
+        <!-- Popup Header -->
+        <div style="padding: 16px 20px; background: #172554; border-bottom: 1px solid rgba(59,130,246,0.3); display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 6px; background: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">F</div>
+            <div>
+              <h4 style="font-size: 14px; font-weight: 700; color: #fff;">Framewise Deck</h4>
+              <span style="font-size: 11px; color: #93c5fd;">6 Slides Captured in This Session</span>
+            </div>
+          </div>
+          <button style="background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <span>Review in Studio</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+
+        <!-- Popup Slide Grid / List -->
+        <div style="flex: 1; padding: 14px 16px; overflow-y: hidden; display: flex; flex-direction: column; gap: 10px;">
+          
+          <!-- Slide Card 1 (Hovered / Clicked to seek) -->
+          <div style="background: #1e293b; border: 1.5px solid #38bdf8; border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 12px; position: relative;">
+            <div style="width: 90px; height: 50px; background: #0b1329; border-radius: 4px; border: 1px solid #334155; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #94a3b8; font-weight: 600;">
+              Slide #3
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="background: #0284c7; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">⏱ 21:05</span>
+                <span style="font-size: 11px; color: #38bdf8; font-weight: 600;">Jumping video...</span>
+              </div>
+              <h5 style="font-size: 12px; color: #f8fafc; font-weight: 600; margin-top: 4px;">Divide & Conquer Recurrence</h5>
+            </div>
+            <div style="color: #64748b; font-size: 16px;">&times;</div>
+          </div>
+
+          <!-- Slide Card 2 -->
+          <div style="background: #131d2e; border: 1px solid #1e293b; border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 12px;">
+            <div style="width: 90px; height: 50px; background: #0b1329; border-radius: 4px; border: 1px solid #334155; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #94a3b8; font-weight: 600;">
+              Slide #2
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="background: #1e293b; color: #94a3b8; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">⏱ 12:40</span>
+              </div>
+              <h5 style="font-size: 12px; color: #cbd5e1; font-weight: 500; margin-top: 4px;">Master Theorem Cases 1-3</h5>
+            </div>
+            <div style="color: #475569; font-size: 16px;">&times;</div>
+          </div>
+
+          <!-- Slide Card 3 -->
+          <div style="background: #131d2e; border: 1px solid #1e293b; border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 12px;">
+            <div style="width: 90px; height: 50px; background: #0b1329; border-radius: 4px; border: 1px solid #334155; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #94a3b8; font-weight: 600;">
+              Slide #1
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="background: #1e293b; color: #94a3b8; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">⏱ 04:15</span>
+              </div>
+              <h5 style="font-size: 12px; color: #cbd5e1; font-weight: 500; margin-top: 4px;">Asymptotic Complexity Bounds</h5>
+            </div>
+            <div style="color: #475569; font-size: 16px;">&times;</div>
+          </div>
+
+        </div>
+
+        <!-- Popup Footer Actions -->
+        <div style="padding: 12px 16px; background: #0a0f1d; border-top: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; color: #64748b;">Click any slide to seek active tab</span>
+          <span style="font-size: 11px; color: #ef4444; font-weight: 600; cursor: pointer;">Clear All</span>
+        </div>
+
+      </div>
+
+    </div>
+  
+  </div>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    background: #090d16;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 38px 48px 24px;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Ambient background glows */
+  .bg-glow-1 {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 820px;
+    height: 380px;
+    background: radial-gradient(ellipse at center, #a855f733 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-2 {
+    position: absolute;
+    bottom: -100px;
+    right: 10%;
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, #6366f120 0%, transparent 70%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    z-index: 2;
+    margin-bottom: 24px;
+    max-width: 980px;
+  }
+  .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .badge-tag .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #a855f7;
+    box-shadow: 0 0 8px #a855f7;
+  }
+  .headline {
+    font-size: 34px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subheadline {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-weight: 450;
+  }
+  .subheadline b {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+
+  /* Main mockup display container */
+  .mockup-wrap {
+    z-index: 2;
+    width: 100%;
+    max-width: 1184px;
+    height: 570px;
+    position: relative;
+    border-radius: 16px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Window topbar */
+  .window-topbar {
+    height: 38px;
+    background: #151e33;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .traffic-light {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .tl-red { background: #ef4444; }
+  .tl-yellow { background: #f59e0b; }
+  .tl-green { background: #10b981; }
+  .topbar-tab {
+    margin-left: 12px;
+    background: #0f172a;
+    padding: 5px 16px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 2px solid #a855f7;
+  }
+  .topbar-url {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: #64748b;
+    font-family: monospace;
+    width: 320px;
+    text-align: center;
+  }
+
+  /* Inner workspace */
+  .workspace {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #0a0e17;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="header">
+    <div class="badge-tag"><span class="dot"></span>🎨 POWERFUL ANNOTATION STUDIO</div>
+    <h1 class="headline">Annotate Slides, Highlight Formulas & Add Callouts</h1>
+    <p class="subheadline">Highlight essential proofs, circle diagrams, insert sticky notes, and reorder your slides with drag & drop.</p>
+  </div>
+
+  <div class="mockup-wrap">
+    
+    <div class="window-topbar">
+      <div class="traffic-light tl-red"></div>
+      <div class="traffic-light tl-yellow"></div>
+      <div class="traffic-light tl-green"></div>
+      <div class="topbar-tab">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#a855f7"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <span>Framewise Studio — Annotations & Deck Editor</span>
+      </div>
+      <div class="topbar-url">framewise://studio/deck/cs189-spring2026</div>
+    </div>
+    <div class="workspace" style="display: flex; flex-direction: column;">
+      
+      <!-- Studio Top Toolbar -->
+      <div style="height: 52px; background: #111827; border-bottom: 1px solid #1f2937; display: flex; align-items: center; padding: 0 20px; gap: 14px;">
+        <div style="display: flex; background: #1f2937; padding: 3px; border-radius: 8px; gap: 4px;">
+          <!-- Select -->
+          <div style="padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #9ca3af;">Select</div>
+          <!-- Pen -->
+          <div style="padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #9ca3af;">✏️ Pen</div>
+          <!-- Highlighter (ACTIVE) -->
+          <div style="padding: 6px 14px; background: #a855f7; border-radius: 6px; font-size: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 0 12px rgba(168,85,247,0.5);">🖍️ Highlighter</div>
+          <!-- Text -->
+          <div style="padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #9ca3af;">T Text</div>
+          <!-- Arrow -->
+          <div style="padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #9ca3af;">&rarr; Arrow</div>
+          <!-- Shapes -->
+          <div style="padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #9ca3af;">&square; Box</div>
+        </div>
+
+        <div style="height: 24px; width: 1px; background: #374151;"></div>
+
+        <!-- Color Swatches -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: #facc15; box-shadow: 0 0 0 2px #fff;"></div>
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: #38bdf8;"></div>
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: #4ade80;"></div>
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: #f43f5e;"></div>
+        </div>
+
+        <!-- Right Studio Actions -->
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <button style="background: #1f2937; border: 1px solid #374151; color: #e5e7eb; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;">+ Add Blank Slide</button>
+          <button style="background: #1f2937; border: 1px solid #374151; color: #e5e7eb; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;">Sort by time</button>
+          <button style="background: #a855f7; border: none; color: #fff; padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 700; box-shadow: 0 4px 12px rgba(168,85,247,0.3);">Export PDF &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Studio Canvas Area -->
+      <div style="flex: 1; display: flex; padding: 20px 24px; gap: 20px; background: #0b0f19;">
+        
+        <!-- Left Slide Filmstrip -->
+        <div style="width: 170px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase;">Slides (4/18)</div>
+          
+          <div style="background: #1e1b4b; border: 2px solid #a855f7; border-radius: 8px; padding: 6px; position: relative;">
+            <div style="width: 100%; height: 74px; background: #1e293b; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #c4b5fd;">
+              Current Slide
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #a855f7; margin-top: 4px; font-weight: 700;">
+              <span>#1 Active</span>
+              <span>18:42</span>
+            </div>
+          </div>
+
+          <div style="background: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 6px;">
+            <div style="width: 100%; height: 74px; background: #1e293b; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #9ca3af;">
+              Blank Card
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #6b7280; margin-top: 4px;">
+              <span>#2 Note</span>
+              <span>Text</span>
+            </div>
+          </div>
+
+          <div style="background: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 6px;">
+            <div style="width: 100%; height: 74px; background: #1e293b; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #9ca3af;">
+              Slide 3
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #6b7280; margin-top: 4px;">
+              <span>#3 Slide</span>
+              <span>24:10</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Editable Slide Canvas -->
+        <div style="flex: 1; background: #1e293b; border-radius: 12px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.5); padding: 32px 42px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+          
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #a855f7; padding-bottom: 12px; margin-bottom: 24px;">
+              <h2 style="font-size: 24px; color: #f8fafc; font-weight: 700;">Dijkstra&rsquo;s Shortest Path Algorithm: Priority Queue Analysis</h2>
+              <span style="background: #a855f720; color: #d8b4fe; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700;">⏱ 18:42</span>
+            </div>
+
+            <!-- Annotated Section with simulated highlighter -->
+            <div style="position: relative; margin-bottom: 24px; max-width: 600px;">
+              <p style="font-size: 15px; color: #cbd5e1; line-height: 1.6;">
+                For any weighted directed graph G = (V, E) with non-negative edge weights w(u, v) &ge; 0:
+              </p>
+              
+              <div style="margin-top: 14px; position: relative; display: inline-block;">
+                <!-- Glowing yellow highlight box overlay -->
+                <div style="position: absolute; inset: -4px -8px; background: rgba(250, 204, 21, 0.35); border: 1px dashed #facc15; border-radius: 6px; transform: rotate(-0.5deg);"></div>
+                <div style="position: relative; font-size: 19px; font-weight: 700; color: #fef08a; font-family: monospace;">
+                  Overall Complexity: O((|V| + |E|) &middot; log |V|)
+                </div>
+              </div>
+
+              <!-- Vector arrow annotation below equation -->
+              <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px; color: #f43f5e; font-weight: bold;">&uarr;</span>
+                <span style="font-size: 11px; background: #f43f5e20; border: 1px solid #f43f5e; color: #fda4af; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Min-Heap Priority Queue Optimization</span>
+              </div>
+            </div>
+
+            <!-- Hand-drawn style sticky callout annotation -->
+            <div style="position: absolute; right: 30px; top: 90px; width: 220px; background: #fef9c3; color: #713f12; padding: 14px 16px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transform: rotate(1.5deg); border-left: 5px solid #eab308;">
+              <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #a16207; margin-bottom: 4px;">📌 Exam Callout Note</div>
+              <p style="font-size: 12px; font-weight: 600; line-height: 1.4;">Always state that non-negative weights are required! Otherwise use Bellman-Ford.</p>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #64748b; border-top: 1px solid #334155; padding-top: 12px;">
+            <span>Canvas Objects: 1 Highlighter &middot; 1 Sticky Note &middot; 1 Vector Arrow</span>
+            <span style="color: #a855f7; font-weight: 600;">100% Vector Canvas &middot; Lossless Annotations</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  
+  </div>
+</body>
+</html>

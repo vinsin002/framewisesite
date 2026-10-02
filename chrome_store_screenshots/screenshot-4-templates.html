@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    background: #090d16;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 38px 48px 24px;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Ambient background glows */
+  .bg-glow-1 {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 820px;
+    height: 380px;
+    background: radial-gradient(ellipse at center, #10b98133 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-2 {
+    position: absolute;
+    bottom: -100px;
+    right: 10%;
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, #6366f120 0%, transparent 70%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    z-index: 2;
+    margin-bottom: 24px;
+    max-width: 980px;
+  }
+  .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .badge-tag .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+  }
+  .headline {
+    font-size: 34px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subheadline {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-weight: 450;
+  }
+  .subheadline b {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+
+  /* Main mockup display container */
+  .mockup-wrap {
+    z-index: 2;
+    width: 100%;
+    max-width: 1184px;
+    height: 570px;
+    position: relative;
+    border-radius: 16px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Window topbar */
+  .window-topbar {
+    height: 38px;
+    background: #151e33;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .traffic-light {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .tl-red { background: #ef4444; }
+  .tl-yellow { background: #f59e0b; }
+  .tl-green { background: #10b981; }
+  .topbar-tab {
+    margin-left: 12px;
+    background: #0f172a;
+    padding: 5px 16px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 2px solid #10b981;
+  }
+  .topbar-url {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: #64748b;
+    font-family: monospace;
+    width: 320px;
+    text-align: center;
+  }
+
+  /* Inner workspace */
+  .workspace {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #0a0e17;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="header">
+    <div class="badge-tag"><span class="dot"></span>📝 EXPAND YOUR LECTURE NOTES</div>
+    <h1 class="headline">Insert Custom Blank Slides & Paper Styles</h1>
+    <p class="subheadline">Add custom note cards anywhere in your deck: Blueprint Grid, Blackboard, Warm Paper, or Yellow Pad.</p>
+  </div>
+
+  <div class="mockup-wrap">
+    
+    <div class="window-topbar">
+      <div class="traffic-light tl-red"></div>
+      <div class="traffic-light tl-yellow"></div>
+      <div class="traffic-light tl-green"></div>
+      <div class="topbar-tab">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#10b981"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        <span>Framewise Paper Style Studio</span>
+      </div>
+      <div class="topbar-url">framewise://studio/templates</div>
+    </div>
+    <div class="workspace" style="display: flex; flex-direction: column; padding: 24px 32px; background: #0a0f1d;">
+      
+      <!-- Template Selector Ribbon -->
+      <div style="background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+        <div>
+          <h4 style="font-size: 15px; color: #f3f4f6; font-weight: 700;">Choose Your Blank Slide Paper Style</h4>
+          <p style="font-size: 12px; color: #9ca3af; margin-top: 2px;">Insert custom note cards, cheat sheets, or chapter dividers anywhere in your deck.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <div style="padding: 6px 12px; background: #10b98120; border: 1.5px solid #10b981; border-radius: 8px; font-size: 12px; font-weight: 700; color: #34d399; display: flex; align-items: center; gap: 6px;">
+            <span>📐 Blueprint Grid</span>
+          </div>
+          <div style="padding: 6px 12px; background: #1f2937; border: 1px solid #374151; border-radius: 8px; font-size: 12px; font-weight: 600; color: #cbd5e1;">
+            <span>📓 Blackboard</span>
+          </div>
+          <div style="padding: 6px 12px; background: #1f2937; border: 1px solid #374151; border-radius: 8px; font-size: 12px; font-weight: 600; color: #cbd5e1;">
+            <span>📄 Warm Paper</span>
+          </div>
+          <div style="padding: 6px 12px; background: #1f2937; border: 1px solid #374151; border-radius: 8px; font-size: 12px; font-weight: 600; color: #cbd5e1;">
+            <span>📝 Yellow Pad</span>
+          </div>
+          <div style="padding: 6px 12px; background: #1f2937; border: 1px solid #374151; border-radius: 8px; font-size: 12px; font-weight: 600; color: #cbd5e1;">
+            <span>🌸 Soft Rose</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side-by-Side Paper Slide Previews -->
+      <div style="flex: 1; display: flex; gap: 20px;">
+        
+        <!-- Blueprint Grid Slide -->
+        <div style="flex: 1; background: #0c4a6e; border-radius: 12px; border: 2px solid #38bdf8; box-shadow: 0 12px 30px rgba(12,74,110,0.5); padding: 24px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+          background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 24px 24px;">
+          
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #38bdf8; padding-bottom: 8px; margin-bottom: 16px;">
+              <span style="font-size: 18px; font-weight: 800; color: #e0f2fe; letter-spacing: 0.05em; text-transform: uppercase;">📐 Engineering Blueprint Note</span>
+              <span style="background: #38bdf825; color: #7dd3fc; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 700;">Custom Card #1</span>
+            </div>
+            
+            <div style="font-family: monospace; color: #bae6fd; font-size: 14px; line-height: 1.6;">
+              <div style="font-weight: 700; color: #ffffff; margin-bottom: 6px;">&bull; Derivation Summary:</div>
+              <div>&bull; Boundary condition: &part;V/&part;t + 1/2 &sigma;&sup2;S&sup2; (&part;&sup2;V/&part;S&sup2;) + rS(&part;V/&part;S) - rV = 0</div>
+              <div>&bull; Black-Scholes PDE closed-form solution:</div>
+              <div style="margin: 8px 0; padding: 8px 14px; background: rgba(0,0,0,0.3); border-radius: 6px; border: 1px solid #38bdf860;">
+                C(S, t) = N(d<sub>1</sub>)S &minus; N(d<sub>2</sub>) K e<sup>&minus;r(T &minus; t)</sup>
+              </div>
+              <div style="color: #7dd3fc;">&check; Calibrated against market implied volatility surface</div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #7dd3fc; border-top: 1px solid #0284c7; padding-top: 8px;">
+            <span>Style: Engineering Blueprint Grid</span>
+            <span>16:9 Landscape Ratio</span>
+          </div>
+        </div>
+
+        <!-- Blackboard Chalkboard Slide -->
+        <div style="flex: 1; background: #18181b; border-radius: 12px; border: 2px solid #52525b; box-shadow: 0 12px 30px rgba(0,0,0,0.6); padding: 24px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+          
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #a1a1aa; padding-bottom: 8px; margin-bottom: 16px;">
+              <span style="font-size: 18px; font-weight: 800; color: #fafafa; letter-spacing: 0.05em; text-transform: uppercase;">📓 Blackboard Chalk Card</span>
+              <span style="background: #3f3f46; color: #d4d4d8; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 700;">Custom Card #2</span>
+            </div>
+            
+            <div style="font-family: 'SF Pro Display', serif; color: #e4e4e7; font-size: 15px; line-height: 1.6;">
+              <div style="font-size: 17px; font-weight: 700; color: #fef08a; font-family: sans-serif;">Key Concepts to Memorize for Exam:</div>
+              <div style="margin-top: 8px;">1. Spectral Graph Partitioning via Fiedler vector</div>
+              <div>2. Normalized Laplacian L<sub>sym</sub> = D<sup>&minus;1/2</sup> L D<sup>&minus;1/2</sup></div>
+              <div style="margin: 8px 0; padding: 8px 14px; background: rgba(255,255,255,0.05); border-radius: 6px; border: 1px dashed #71717a; font-family: monospace;">
+                &lambda;<sub>2</sub> &le; 2 &middot; h(G) &le; &radic;(2 &middot; &Delta; &middot; &lambda;<sub>2</sub>) [Cheeger's Inequality]
+              </div>
+              <div style="color: #a1a1aa; font-style: italic;">Professor emphasized this in 2026 review session!</div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #71717a; border-top: 1px solid #27272a; padding-top: 8px;">
+            <span>Style: Dark Chalkboard</span>
+            <span>Seamlessly Merged into Export PDF</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  
+  </div>
+</body>
+</html>

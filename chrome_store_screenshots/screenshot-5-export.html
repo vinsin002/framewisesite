@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    background: #090d16;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 38px 48px 24px;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Ambient background glows */
+  .bg-glow-1 {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 820px;
+    height: 380px;
+    background: radial-gradient(ellipse at center, #f59e0b33 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-2 {
+    position: absolute;
+    bottom: -100px;
+    right: 10%;
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, #6366f120 0%, transparent 70%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    z-index: 2;
+    margin-bottom: 24px;
+    max-width: 980px;
+  }
+  .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .badge-tag .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #f59e0b;
+    box-shadow: 0 0 8px #f59e0b;
+  }
+  .headline {
+    font-size: 34px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subheadline {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-weight: 450;
+  }
+  .subheadline b {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+
+  /* Main mockup display container */
+  .mockup-wrap {
+    z-index: 2;
+    width: 100%;
+    max-width: 1184px;
+    height: 570px;
+    position: relative;
+    border-radius: 16px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Window topbar */
+  .window-topbar {
+    height: 38px;
+    background: #151e33;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .traffic-light {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .tl-red { background: #ef4444; }
+  .tl-yellow { background: #f59e0b; }
+  .tl-green { background: #10b981; }
+  .topbar-tab {
+    margin-left: 12px;
+    background: #0f172a;
+    padding: 5px 16px;
+    border-radius: 6px 6px 0 0;
+    font-size: 12px;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 2px solid #f59e0b;
+  }
+  .topbar-url {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: #64748b;
+    font-family: monospace;
+    width: 320px;
+    text-align: center;
+  }
+
+  /* Inner workspace */
+  .workspace {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #0a0e17;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="header">
+    <div class="badge-tag"><span class="dot"></span>📄 PUBLICATION-GRADE PDF EXPORT</div>
+    <h1 class="headline">Export 16:9 Landscape PDF Study Booklets</h1>
+    <p class="subheadline">Widescreen booklets built for tablets, iPad, and Notion. Choose Full Page, Slide + Notes, or 4-in-1 layouts.</p>
+  </div>
+
+  <div class="mockup-wrap">
+    
+    <div class="window-topbar">
+      <div class="traffic-light tl-red"></div>
+      <div class="traffic-light tl-yellow"></div>
+      <div class="traffic-light tl-green"></div>
+      <div class="topbar-tab">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+        <span>Framewise PDF Export & Live Preview</span>
+      </div>
+      <div class="topbar-url">framewise://export/preview.pdf</div>
+    </div>
+    <div class="workspace" style="display: flex; padding: 20px 24px; gap: 24px; background: #0c111d;">
+      
+      <!-- Left: Export Layout Selector Controls -->
+      <div style="width: 380px; display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <span style="font-size: 11px; font-weight: 700; color: #f59e0b; text-transform: uppercase;">Export Settings</span>
+          <h3 style="font-size: 18px; color: #f9fafb; font-weight: 700; margin-top: 2px;">Select PDF Layout</h3>
+          <p style="font-size: 12px; color: #9ca3af; margin-top: 2px;">Optimized for widescreen reading on iPad, Android & printouts.</p>
+        </div>
+
+        <!-- Layout 1: Full Page (Selected) -->
+        <div style="background: #1e1b4b; border: 2px solid #6366f1; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 14px rgba(99,102,241,0.25);">
+          <div style="font-size: 26px;">🖼️</div>
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <h4 style="font-size: 13px; font-weight: 700; color: #ffffff;">Full Page (16:9 Widescreen)</h4>
+              <span style="background: #6366f1; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700;">ACTIVE</span>
+            </div>
+            <p style="font-size: 11px; color: #c7d2fe; margin-top: 2px;">Full-bleed slide per page. Ideal for tablets, GoodNotes & Notion.</p>
+          </div>
+        </div>
+
+        <!-- Layout 2: Slide + Notes -->
+        <div style="background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 26px;">📑</div>
+          <div style="flex: 1;">
+            <h4 style="font-size: 13px; font-weight: 600; color: #e5e7eb;">Slide + Notes Side-by-Side</h4>
+            <p style="font-size: 11px; color: #9ca3af; margin-top: 2px;">Slide on left, lined study note rules on right for handwritten notes.</p>
+          </div>
+        </div>
+
+        <!-- Layout 3: 4 in 1 Cheat Sheet -->
+        <div style="background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 26px;">📊</div>
+          <div style="flex: 1;">
+            <h4 style="font-size: 13px; font-weight: 600; color: #e5e7eb;">4-in-1 Compact Cheat Sheet</h4>
+            <p style="font-size: 11px; color: #9ca3af; margin-top: 2px;">4 slides per page for high-density fast exam revision.</p>
+          </div>
+        </div>
+
+        <!-- Primary Action Download Button -->
+        <div style="margin-top: auto; background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 14px;">
+          <button style="width: 100%; background: linear-gradient(135deg, #f59e0b, #d97706); border: none; padding: 12px; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 16px rgba(245,158,11,0.4);">
+            <span>Download 16:9 PDF Booklet</span>
+            <span>&darr;</span>
+          </button>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #9ca3af; margin-top: 10px;">
+            <span>✓ 18 Pages Compiled</span>
+            <span>✓ 100% Client-Side PDF</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Live PDF Preview Canvas -->
+      <div style="flex: 1; background: #1f2937; border-radius: 12px; border: 1px solid #374151; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); padding: 18px; display: flex; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-size: 12px; font-weight: 600; color: #e5e7eb;">Interactive PDF Preview &middot; Page 1 of 18</span>
+          <div style="display: flex; gap: 6px;">
+            <span style="padding: 2px 8px; background: #374151; border-radius: 4px; font-size: 11px; color: #cbd5e1;">&larr; Prev</span>
+            <span style="padding: 2px 8px; background: #374151; border-radius: 4px; font-size: 11px; color: #cbd5e1;">Next &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Rendered Landscape 16:9 PDF Page Sample -->
+        <div style="flex: 1; background: #0f172a; border-radius: 8px; border: 2px solid #4b5563; box-shadow: 0 8px 24px rgba(0,0,0,0.7); padding: 24px 32px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 16px;">
+              <span style="font-size: 14px; font-weight: 700; color: #f1f5f9;">CS229 &middot; Supervised Learning Lecture Deck</span>
+              <span style="font-size: 12px; color: #38bdf8; font-weight: 600;">Framewise HD Capture</span>
+            </div>
+            <h3 style="font-size: 20px; color: #ffffff; font-weight: 800;">Support Vector Machines: Maximum Margin Classifier</h3>
+            <div style="margin-top: 14px; background: #1e293b; padding: 14px 18px; border-radius: 8px; border-left: 4px solid #f59e0b; font-family: monospace; font-size: 13px; color: #fef3c7;">
+              min<sub>w, b</sub> 1/2 ||w||<sup>2</sup> &emsp; s.t. &emsp; y<sup>(i)</sup> (w<sup>T</sup> x<sup>(i)</sup> + b) &ge; 1, &forall;i
+            </div>
+            <p style="font-size: 12px; color: #94a3b8; margin-top: 12px;">The optimal separating hyperplane maximizes geometric margin &gamma; = 1 / ||w||.</p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; border-top: 1px solid #1e293b; padding-top: 8px;">
+            <span>Exported via Framewise Chrome Extension</span>
+            <span>Timestamp 32:15 &middot; Page 1/18</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  
+  </div>
+</body>
+</html>
