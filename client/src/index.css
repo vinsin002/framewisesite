@@ -1073,3 +1073,57 @@ p {
 .pdf-slide.s3 { background: linear-gradient(135deg, #FFF4C2, #FDE68A); }
 .pdf-slide.s4 { background: linear-gradient(135deg, #1E293B, #334155); }
 .layout-preview { aspect-ratio: 16/9; }
+
+
+/* ---------- Showcase: large studio mock with captions ---------- */
+.showcase-stage {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 56px;
+}
+.showcase-zoom {
+  width: 100%;
+  max-width: 560px;
+}
+@media (min-width: 1000px) {
+  .showcase-zoom {
+    max-width: 560px;
+    zoom: 1.7;
+  }
+}
+.showcase-stage .studio-mock { transform: none; }
+
+.showcase-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .showcase-points { grid-template-columns: 1fr; }
+}
+.showcase-point {
+  text-align: center;
+}
+.showcase-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.showcase-point h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.showcase-point p {
+  font-size: 14.5px;
+  line-height: 1.6;
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="framewiseBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E7BFF"/>
+      <stop offset="100%" stop-color="#0052EA"/>
+    </linearGradient>
+  </defs>
+  <!-- Squircle container -->
+  <rect width="512" height="512" rx="120" fill="url(#framewiseBlue)"/>
+  <rect x="1.5" y="1.5" width="509" height="509" rx="118.5" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="3"/>
+  
+  <!-- Symmetrical, centered Framewise camera icon -->
+  <g transform="translate(256, 268)">
+    <path fill-rule="evenodd" clip-rule="evenodd" 
+      d="M-128 106 C-148 106 -162 92 -162 72 L-162 -22 C-162 -42 -148 -56 -128 -56 L-68 -56 C-60 -56 -52 -62 -47 -71 L-37 -88 C-32 -98 -22 -104 -11 -104 L11 -104 C22 -104 32 -98 37 -88 L47 -71 C52 -62 60 -56 68 -56 L128 -56 C148 -56 162 -42 162 -22 L162 72 C162 92 148 106 128 106 Z 
+         M0 -32 C-31 -32 -56 -7 -56 24 C-56 55 -31 80 0 80 C31 80 56 55 56 24 C56 -7 31 -32 0 -32 Z" 
+      fill="#FFFFFF"/>
+    <!-- Subtle camera lens ring -->
+    <circle cx="0" cy="24" r="26" fill="none" stroke="#FFFFFF" stroke-width="11" opacity="0.95"/>
+  </g>
+</svg>
