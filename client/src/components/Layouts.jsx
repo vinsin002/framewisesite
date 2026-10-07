@@ -1,41 +1,33 @@
-function FullBleedPreview() {
-  return <div className="bar" style={{ width: '92%', height: '80%' }} />;
-}
-
-function SideBySidePreview() {
+function FullPagePreview() {
   return (
-    <div style={{ display: 'flex', gap: 6, width: '92%', height: '70%' }}>
-      <div className="bar" style={{ width: '60%', height: '100%' }} />
-      <div style={{ width: '40%', height: '100%', background: '#E2E8F0', borderRadius: 3 }} />
+    <div className="pdf-sheet pdf-sheet-full">
+      <div className="pdf-slide" />
     </div>
   );
 }
 
-function StackedPreview() {
+function FourInOnePreview() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '80%', height: '80%' }}>
-      <div className="bar" style={{ width: '100%', height: '55%' }} />
-      <div style={{ width: '100%', height: '35%', background: '#E2E8F0', borderRadius: 3 }} />
-    </div>
-  );
-}
-
-function GridPreview() {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 5, width: '80%', height: '75%' }}>
-      <div className="bar" />
-      <div className="bar" />
-      <div className="bar" />
-      <div className="bar" />
+    <div className="pdf-sheet pdf-sheet-grid">
+      <div className="pdf-slide s1" />
+      <div className="pdf-slide s2" />
+      <div className="pdf-slide s3" />
+      <div className="pdf-slide s4" />
     </div>
   );
 }
 
 const LAYOUTS = [
-  { name: 'Full-Bleed 16:9', desc: 'Widescreen slides, zero margins', preview: <FullBleedPreview /> },
-  { name: 'Side-by-Side', desc: 'Slide left, notes panel right', preview: <SideBySidePreview /> },
-  { name: 'Stacked', desc: 'Slide on top, notes below', preview: <StackedPreview /> },
-  { name: '2×2 Cheat Sheet', desc: '4 slides per page', preview: <GridPreview /> }
+  {
+    name: 'Full Page (1×1)',
+    desc: 'One slide per page, edge to edge in widescreen 16:9. Best for presenting or reading slide by slide.',
+    preview: <FullPagePreview />
+  },
+  {
+    name: '4 in 1 (1×4)',
+    desc: 'Four slides on every page. A compact cheat sheet that keeps a whole lecture to a few pages.',
+    preview: <FourInOnePreview />
+  }
 ];
 
 export default function Layouts() {
@@ -44,8 +36,11 @@ export default function Layouts() {
       <div className="container">
         <div className="section-head">
           <span className="eyebrow">Export</span>
-          <h2>Pick the PDF layout that fits how you study</h2>
-          <p>Switch between four layouts right from the live preview — no re-exporting needed.</p>
+          <h2>Two clean PDF layouts, one live preview</h2>
+          <p>
+            Flip between layouts in the preview, rename your project right there, and
+            download. The file is named after your project, with nothing extra added.
+          </p>
         </div>
 
         <div className="layouts-grid">

@@ -1,4 +1,4 @@
-const CHROME_STORE_URL = 'https://chrome.google.com/webstore';
+const CHROME_STORE_URL = 'https://chromewebstore.google.com/detail/knbomfddjfkikbcebpoenaogpeeomhck';
 
 export default function Navbar() {
   return (
@@ -12,9 +12,7 @@ export default function Navbar() {
         <nav className="nav-links nav-mobile-hide">
           <a href="#features">Features</a>
           <a href="#how-it-works">How it works</a>
-          <a href="#layouts">PDF layouts</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#waitlist">Waitlist</a>
+          <a href="#layouts">PDF export</a>
         </nav>
 
         <div className="nav-actions">

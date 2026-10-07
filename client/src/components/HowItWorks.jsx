@@ -43,17 +43,17 @@ function ExportVisual() {
 const STEPS = [
   {
     title: 'Capture',
-    desc: 'Watch any YouTube lecture and press "S" whenever an important slide appears. It\'s saved instantly at full resolution.',
+    desc: 'Watch any YouTube lecture and press S (or Alt+S) whenever an important slide appears. It\'s saved instantly at full resolution while the video keeps playing.',
     visual: <CaptureVisual />
   },
   {
     title: 'Annotate & arrange',
-    desc: 'Open the Studio tab to draw, highlight and add text on each slide, then drag to reorder your deck exactly how you want it.',
+    desc: 'Open Framewise Studio to draw, highlight, erase and add text on each slide, then drag slides to reorder your deck exactly how you want it.',
     visual: <AnnotateVisual />
   },
   {
     title: 'Export',
-    desc: 'Pick a PDF layout — full-bleed, side-by-side, stacked or a cheat-sheet grid — and download a clean, ready-to-study booklet.',
+    desc: 'Choose Full Page or 4 in 1 in the live preview, rename your project, and download a clean PDF named after it.',
     visual: <ExportVisual />
   }
 ];
